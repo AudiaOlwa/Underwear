@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+  {% load static %}
+  {% block content %}
+
+
+    <div class="category-page">
+      <!-- Breadcrumb -->
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item text-uppercase"> <a href="{% url 'index' %}" class="text-primary">Home</a></li>
+          <li class="breadcrumb-item active text-uppercase">BOXERS</li>
+        </ol>
+      </div>
+      <!-- Products-->
+      <section class="products p-t-small">
+        <div class="container">
+          <header>
+            <div class="row d-flex align-items-center">
+              <div class="col-md-6">
+                <h2 class="heading-line">Sous-vetements Hommes</h2>
+              </div>
+              <div class="col-md-6">
+                <div class="filters d-flex justify-content-end">
+                  <select title="Brand" name="brand" class="form-control">
+                    <option value="">Boxers</option>
+                    <option value="">Cullotes</option>
+                    <option value="">Slips</option>
+                    
+                  </select>
+                  <select title="Alphabetically A-Z" name="alphabetically" class="form-control">
+                    <option value="">Alphabetically A-Z</option>
+                    <option value="">Alphabetically Z-A</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="my-5">
+            <div class="row">
+                 {% for homme in hommes %} 
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="item text-center">
+                      <div class="product-image"><span class="new badge badge-pill badge-secondary text-uppercase">sale</span><img src="{{ homme.image.url }}" alt="camera" class="img-fluid">
+                        <div class="overlay p-0 d-flex align-items-center justify-content-center mt-5"><a href="" class="wishlist"><i class="fa fa-heart"></i></a>
+                          <ul class="list-unstyled mb-0">
+                            <li><a href="{% url 'hdetails' homme.id %}" class="btn btn-primary btn-sm px-4 mb-2"> 
+                                 
+                                Voir plus</a></li>
+                            <li><a href="{% url 'cart' %}" class="btn btn-dark btn-sm">
+                                 
+                                Acheter</a></li>
+                          </ul>
+                        </div>
+                      </div><a href="detail.html" class="item-name">
+                        <h4 class="h6">{{ homme.nom }}</h4></a>
+                      <ul class="list-inline rate text-primary my-2">
+                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                      </ul>
+                      <h6 class="" style="margin-top: 70px"> <b><i>{{ homme.description }}</i></b> </h6>
+                      <ul class="price list-inline">
+                        <li class="list-inline-item"> <span class="price">{{ homme.prix }} Fcfa</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                   {% endfor %}
+                  
+                
+               
+              
+            </div>
+          </div>
+          <!-- Pagination -->
+          <div class="pagination pagination-custom mt-5">
+            <nav aria-label="...">
+              <ul class="pagination pagination-sm d-flex justify-content-between">
+                <li class="page-item disabled"><a href="#" tabindex="-1" class="page-link">Previous</a></li>
+                <li> 
+                  <ul class="pages list-inline">
+                    <li class="page-item active list-inline-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item list-inline-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item list-inline-item"><a href="#" class="page-link">3</a></li>
+                  </ul>
+                </li>
+                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Search Panel-->
+    <div class="search-overlay">
+      <div class="search-inner d-flex justify-content-center align-items-center">
+        <div class="search-close"><i class="icon-close"></i></div>
+        <div class="container">
+          <div class="form-holder">
+            <form class="d-flex">
+              <input type="search" placeholder="What are you looking for...">
+              <button type="submit" class="search text-primary text-uppercase">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %} 

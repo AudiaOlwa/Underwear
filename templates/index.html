@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+  {% load static %}
+  {% block content %}
+
+
+ <div class="container" >
+          <!-- *** ADVANTAGES ***-->
+          <div id="advantages" >
+            <div class="box text-center" 
+            style="background-color:ghostwhite;">
+              
+            <h4> <i> <b>Underwear Shop</b> </i></h4>  <h5><strong> <i> est une boutique en ligne spécialisé dans la vente de lingeries <br> et sous-vetements (slip, culotte, bas, soutien-gorge etc...) hommes et femmes. <br> Faites-y vos achats en toute sécurité. Qualité garentie!</strong></i></h5>
+              
+                      <div class="col-sm-6">
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+   
+    <!-- *** LOGIN MODAL END ***-->
+    <!-- *** SLIDER ***-->
+    <div id="slider" class="owl-carousel owl-theme">
+      <div class="item"><img src="{% static 'img/hf6.webp'%}" alt="" class="img-fluid"></div>
+      <div class="item"><img src="{% static 'img/h4.jpg'%}" alt="" class="img-fluid" ></div>
+      <div class="item"><img src="{% static 'img/f4.jpg'%}" alt="" class="img-fluid" 
+        style="height: %; width: 100%;"></div>
+      <div class="item"><img src="{% static 'img/hf5.webp'%}" alt="" class="img-fluid" style="width:100%; height:%;"></div>
+      </div>
+
+
+
+     <section class="categories mt-" >
+        <div class="container" >
+          <div class="categories-inner" style="background-color:;">
+            <header>
+              <h2 class="h5 heading-line d-none d-md-block">Categories</h2>
+            </header>
+            <div class="row text-center">
+               <div class="col-md-6 item"><a href="{% url 'farticle' %}">
+                  <h4>Lingeries</h4>
+                  <h6>Ensemble de slips&soutiens-gorges</h6>
+                  <div class="image"><img src="{% static 'img/cf1.jpg'%}" alt="lenses" class="img-fluid" style="width:30%"></div></a></div>
+
+            <div class="col-md-6 item"><a href="{% url 'harticle' %}">
+                  <h4>Sous-vetements</h4>
+                  <h6>slip, culotte & bas hommes</h6>
+                  <div class="image"><img src="{% static 'img/h2.jpeg'%}" alt="camera" class="img-fluid" style="width:30%"></div></a></div>
+             </div>
+          </div>
+        </div>
+      </section>
+       
+      <!-- Sale Section-->
+      <section class="product-2">
+        <div class="container  " >
+          <header>
+            <h2 class="h3 heading-line">Collections Femmes</h2>
+          </header>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                {% for femme in femmes %}
+                <div class="col-md-6">
+                  <div class="item">
+                    <h4>{{ femme.nom }}</h4>
+                    <p class="text-primary">{{ femme.prix }} Fcfa</p><img src="{{ femme.image.url }}" alt="lens" class="img-fluid">
+                    <div class="overlay d-flex align-items-center justify-content-center"><a href="{% url 'fdetails' femme.id %}" class="btn btn-primary px-4">Voir plus</a></div>
+                  </div>
+                </div>
+                
+                {% endfor %}
+              </div>
+            </div>
+         <div id="carouselExampleSlidesOnly" 
+         class="carousel slide col-lg-6 js-pull" 
+            data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner">
+            <img src="{% static 'img/cf1.webp'%}" alt="lens" class="img-fluid carousel-item active">
+            <img src="{% static 'img/r2.webp'%}" alt="lens" class="img-fluid carousel-item active">
+            <img src="{% static 'img/r1.webp'%}" alt="lens" class="img-fluid carousel-item active">
+            <img src="{% static 'img/cf2.webp'%}" alt="lens" class="img-fluid carousel-item active">
+            <img src="{% static 'img/hf2.webp'%}" alt="lens" class="img-fluid carousel-item active">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+       
+ 
+      
+    <!-- /#slider-->
+    <!-- *** SLIDER END ***-->
+    
+     
+               <div class="bar background-image-fixed-2 no-mb color-white text-center" style="background: url('{% static 'img/f.jpg'%}')">>
+         </div>
+            
+            <!-- /.modal-->
+          </div>
+          <!-- /.products-->
+        </div>
+          <!-- Lenses Section-->
+          <section class="product-1">
+        <div class="container">
+          <header>
+            <h2 class="h3 heading-line">Collections Hommes</h2>
+          </header>
+          <div class="row d-flex flex-row align-items-stretch" >
+            <div id="carouselExampleSlidesOnly" 
+            class="carousel slide col-lg-6 js-pull" data-bs-interval="4000" 
+            data-bs-ride="carousel">
+            <div class="carousel-inner">  
+            <img src="{% static 'img/h3.webp'%}"  
+            class=" img-fluid carousel-item active">
+            <img src="{% static 'img/h4.jpg'%}"  
+            class="img-fluid carousel-item active">
+            <img src="{% static 'img/h6.jpg'%}"  
+            class="img-fluid carousel-item active">
+            <img src="{% static 'img/h5.jpg'%}"  
+            class="img-fluid carousel-item active">
+             </div>
+           </div>
+
+
+
+ <div class="col-lg-6">
+              <div class="row">
+                {% for homme in hommes %}
+                <div class="col-md-6">
+                  <div class="item">
+                    <h4>{{ homme.nom }}</h4>
+                    <p class="text-primary">{{ homme.prix }} Fcfa </p><img src="{{ homme.image.url }}" alt="camera" class="img-fluid">
+                    <div class="overlay d-flex align-items-center justify-content-center"><a href="{% url 'hdetails' homme.id %}" class="btn btn-primary px-4">Voir plus</a></div>
+                  </div>
+                </div>
+               
+                          {% endfor %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+       
+       
+       <div class="social text-center" id="contact">
+                <h2>We are social</h2>
+                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores laborum nesciunt cu.</p>
+                <ul class="list-inline">
+                  <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                  <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                  <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                  <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-behance"></i></a></li>
+                  <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+                </ul>
+              </div>
+    
+  
+   {% endblock content %} 
