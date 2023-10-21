@@ -1,0 +1,89 @@
+<form action="{% url 'add_to_cart' homme.id %}" method="post">
+              
+                <div class="CTAs my-5 mt-5"> 
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      {% csrf_token %}
+                       <a type="submit" href="{% url 'add_to_cart' pk=homme.pk %}" class="btn btn-primary btn-sm">
+                               
+                              Acheter</a>
+                    </li>
+                   
+                  </ul>
+                </div>
+              </form>
+
+
+
+
+
+
+
+
+    <div class="filters d-flex justify-content-end">
+                   <form  method="GET"  >
+            <select title="Brand" name="brand" class="filters form-control">
+                <option value="" {% if selected_brand == "" %}selected{% endif %}>Tout les produits</option>
+                <option value="Boxers" {% if selected_brand == "Boxers" %}selected{% endif %} >Boxers</option>
+                <option value="Shorts" {% if selected_brand == "Shorts" %}selected{% endif %} >Shorts</option>
+                <option value="Extras" {% if selected_brand == "Extras" %}selected{% endif %} >Extras</option>
+            </select>
+           <button class="btn btn-primary" type="submit">Rechercher</button>
+           </form>
+                </div>
+
+
+
+
+                <div class="col-2">
+                  <div class="product-quantity d-flex align-items-center justify-content-center">
+                    <div class="minus-btn"><i class="icon-android-remove"></i></div>
+                    <input type="text" value="{{ item.quantity }}" class="quantity">
+                    <div class="plus-btn"><i class="icon-android-add"></i></div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="cart-body text-center">
+              <div class="row cart-item">
+                {% for item in cart %}
+                <div class="col-5">
+                  <div class="product-overview text-left d-flex"><a href="detail.html" class="product-img"><img src="{{ item.product.image.url }}" alt="product" class="img-fluid"></a>
+                    <div class="product-details"><a href="detail.html">
+                        <h3 class="h4">{{ item.product.nom }}</h3></a></div>
+                  </div>
+
+                </div>
+                <div class="col-2"><strong>{{ item.product.prix }} Fcfa</strong></div>
+                <!-- cart.html -->
+              <div class="col-2">
+                  <div class="product-quantity d-flex align-items-center justify-content-center">
+                    <div class="minus-btn"><i class="icon-android-remove"></i></div>
+                    <input type="text" value="{{ item.quantity }}" class="quantity">
+                    <div class="plus-btn"><i class="icon-android-add"></i></div>
+                  </div>
+                </div>
+     <div class="col-2"><strong>$500</strong></div>
+                <div class="col-1"><a href="#"><i class="fa fa-close"></i></a></div>
+                 {% endfor %}
+              </div>
+              
+              </div>
+            </div>
+          </div>
+          <div class="total-price text-right">
+            <div class="container">
+              <div class="d-flex justify-content-end align-items-center"><span class="h3">Total: &nbsp;</span><strong class="h2 text-primary">$500</strong></div>
+            </div>
+          </div>
+        </div>

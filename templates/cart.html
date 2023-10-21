@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
   {% load static %}
   {% block content %}
+  
 <div class="container">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item text-uppercase"> <a href="index.html" class="text-primary">Home</a></li>
+          <li class="breadcrumb-item text-uppercase"> <a href="{% url 'index' %}" class="text-primary">Home</a></li>
           <li class="breadcrumb-item active text-uppercase">Shopping Cart</li>
         </ol>
       </div>
@@ -13,59 +14,62 @@
           <div class="cart-holder">
             <div class="cart-heading text-center">
               <div class="row">
-                <div class="col-5 text-left">Product</div>
-                <div class="col-2">Price</div>
-                <div class="col-2">Quantity</div>
+                
+                <div class="col-5 text-left">Photo</div>
+                <div class="col-2">Prix</div>
+                <div class="col-2">Quantité</div>
                 <div class="col-2">Total</div>
                 <div class="col-1"></div>
+               
               </div>
             </div>
-            <div class="cart-body text-center">
-              <div class="row cart-item">
+            <!-- cart.html -->
+
+
+            <div class="cart-body text-center ">
+              <div class="row cart-item " >
+                {% for item in cart %}
                 <div class="col-5">
-                  <div class="product-overview text-left d-flex"><a href="detail.html" class="product-img"><img src="https://d19m59y37dris4.cloudfront.net/photo/1-5-0/img/cart-item.jpg" alt="product" class="img-fluid"></a>
+                  <div class="product-overview text-left d-flex"><a href="detail.html" class="product-img"><img src="{{ item.product.image.url }}" alt="product" class="img-fluid py-2"></a>
                     <div class="product-details"><a href="detail.html">
-                        <h3 class="h4">Fast telephoto zoom lense nano crystal</h3></a></div>
+                        <h3 class="h4 py-2">{{ item.product.nom }}</h3></a></div>
                   </div>
+
                 </div>
-                <div class="col-2"><strong>$500</strong></div>
-                <div class="col-2">
-                  <div class="product-quantity d-flex align-items-center justify-content-center">
+                <div class="col-2 py-3"><strong>{{ item.product.prix }} Fcfa</strong></div>
+                <!-- cart.html -->
+             <div class="col-2 py-3">
+            <div class="product-quantity d-flex align-items-center justify-content-center ">
+                <a href="{% url 'decrease_quantity' pk=item.id %}">
                     <div class="minus-btn"><i class="icon-android-remove"></i></div>
-                    <input type="text" value="1" class="quantity">
+                </a>
+                <input type="text" value="{{ item.quantity }}" class="quantity">
+                <a href="{% url 'increase_quantity' pk=item.id %}">
                     <div class="plus-btn"><i class="icon-android-add"></i></div>
-                  </div>
-                </div>
-                <div class="col-2"><strong>$500</strong></div>
-                <div class="col-1"><a href="#"><i class="fa fa-close"></i></a></div>
-              </div>
-              <div class="row cart-item">
-                <div class="col-5">
-                  <div class="product-overview text-left d-flex"><a href="detail.html" class="product-img"><img src="https://d19m59y37dris4.cloudfront.net/photo/1-5-0/img/cart-item.jpg" alt="product" class="img-fluid"></a>
-                    <div class="product-details"><a href="detail.html">
-                        <h3 class="h4">Fast telephoto zoom lense nano crystal</h3></a></div>
-                  </div>
-                </div>
-                <div class="col-2"><strong>$500</strong></div>
-                <div class="col-2">
-                  <div class="product-quantity d-flex align-items-center justify-content-center">
-                    <div class="minus-btn"><i class="icon-android-remove"></i></div>
-                    <input type="text" value="1" class="quantity">
-                    <div class="plus-btn"><i class="icon-android-add"></i></div>
-                  </div>
-                </div>
-                <div class="col-2"><strong>$500</strong></div>
-                <div class="col-1"><a href="#"><i class="fa fa-close"></i></a></div>
+                </a>
+            </div>
+        </div>
+        <div class="col-2 py-3"><strong>{{ item.total_price }} Fcfa</strong></div>
+        <div class="col-1 py-3">
+            <a href="{% url 'remove_from_cart' pk=item.pk %}"><i class="fa fa-close"></i></a>
+        </div>
+        {% endfor %}
+    </div>
+              
               </div>
             </div>
           </div>
           <div class="total-price text-right">
             <div class="container">
-              <div class="d-flex justify-content-end align-items-center"><span class="h3">Total: &nbsp;</span><strong class="h2 text-primary">$500</strong></div>
+              <div class="d-flex justify-content-end align-items-center"><span class="h5">Le total des achats est de: &nbsp;</span><strong class="h3 text-primary">{{ total_price }} Fcfa</strong></div>
             </div>
           </div>
         </div>
       </section>
+
+  <h3 class="heading-line mb-5 ml-3 text-center my-5 ">Entrez vos informations & validez le payement!</h3>
+
+
       <!-- Step Arrow-->
       <div class="arrow d-flex justify-content-center"><span></span><span></span></div>
       <!-- Shipping section-->
@@ -76,38 +80,28 @@
               <input type="hidden" name="form-name" value="shipping-address-form">
               <!-- Main Shipping Address -->
               <div class="shipping-main">
-                <h3 class="heading-line mb-4 ml-3">Invoice Address</h3>
+                <h3 class="heading-line mb-4 ml-3">Address</h3>
                 <div class="row">
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="firstname" placeholder="First Name" required="" class="form-control">
+                    <input type="text" name="prénom" placeholder="Prénom" required="" class="form-control">
                   </div>
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="lastname" placeholder="Last Name" required="" class="form-control">
+                    <input type="text" name="nom" placeholder="Nom" required="" class="form-control">
                   </div>
                   <div class="col-sm-6 form-group">
-                    <input type="email" name="email" placeholder="Email Address" required="" class="form-control">
+                    <input type="email" name="email" placeholder="Address Email" required="" class="form-control">
                   </div>
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="number" placeholder="Phone Number" required="" class="form-control">
+                    <input type="text" name="numéro" placeholder="Numéro de téléphone" required="" class="form-control">
                   </div>
-                  <div class="col-sm-8 form-group">
-                    <input type="text" name="address-1" placeholder="Address" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-4 form-group">
-                    <input type="text" name="address-2" placeholder="Apt, Suit, etc." required="" class="form-control">
-                  </div>
+                  
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="city" placeholder="City" required="" class="form-control">
+                    <input type="text" name="ville" placeholder="Ville" required="" class="form-control">
                   </div>
+                 
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="postalcode" placeholder="Postal Code" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="region" placeholder="Region" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <select name="country" title="Country" class="country form-control">
-                      <option value=""> </option>
+                    <select name="Pays" title="Pays" class="country form-control">
+                      <option value="">Pays</option>
                       <option value="AX">Åland Islands</option>
                       <option value="AL">Albania</option>
                       <option value="DZ">Algeria</option>
@@ -127,92 +121,39 @@
                       <option value="BH">Bahrain</option>
                     </select>
                   </div>
-                  <div class="col-sm-12 form-group mt-4">
+                  <!--div class="col-sm-12 form-group mt-4">
                     <div class="custom-control custom-checkbox">
                       <input id="another-address" type="checkbox" data-toggle="collapse" data-target="#shippingAddress" class="custom-control-input">
                       <label for="another-address" class="custom-control-label text-muted font-weight-light">Use a different address for shipping</label>
                     </div>
-                  </div>
+                  </div-->
                 </div>
               </div>
               <!--/ Alternative Shipping Address             -->
-              <div id="shippingAddress" class="collapse">
-                <h3 class="heading-line my-4 ml-3">Shipping Address</h3>
-                <div class="row">
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="sfirstname" placeholder="First Name" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="slastname" placeholder="Last Name" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="email" name="semail" placeholder="Email Address" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="snumber" placeholder="Phone Number" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-8 form-group">
-                    <input type="text" name="saddress-1" placeholder="Address" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-4 form-group">
-                    <input type="text" name="saddress-2" placeholder="Apt, Suit, etc." required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="scity" placeholder="City" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="spostalcode" placeholder="Postal Code" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <input type="text" name="sregion" placeholder="Region" required="" class="form-control">
-                  </div>
-                  <div class="col-sm-6 form-group">
-                    <select title="Country" name="scountry" required="" class="country form-control">
-                      <option value=""> </option>
-                      <option value="AX">Åland Islands</option>
-                      <option value="AL">Albania</option>
-                      <option value="DZ">Algeria</option>
-                      <option value="AS">American Samoa</option>
-                      <option value="AD">Andorra</option>
-                      <option value="AO">Angola</option>
-                      <option value="AI">Anguilla</option>
-                      <option value="AQ">Antarctica</option>
-                      <option value="AG">Antigua and Barbuda</option>
-                      <option value="AR">Argentina</option>
-                      <option value="AM">Armenia</option>
-                      <option value="AW">Aruba</option>
-                      <option value="AU">Australia</option>
-                      <option value="AT">Austria</option>
-                      <option value="AZ">Azerbaijan</option>
-                      <option value="BS">Bahamas</option>
-                      <option value="BH">Bahrain</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+              
               <!-- Step Arrow -->
               <div class="arrow d-flex justify-content-center"><span></span><span></span></div>
               <!-- Payment Method    -->
               <div class="payment-method mb-5">
-                <h3 class="heading-line ml-3 mb-4">Payment Method</h3>
+                <h3 class="heading-line ml-3 mb-4 my-5">Methode de Payments </h3>
                 <div class="row">
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="cardname" placeholder="Name On Card" required="" class="form-control">
+                    <input type="text" name="cardname" placeholder="Nom de Cart" required="" class="form-control">
                   </div>
                   <div class="col-sm-6 form-group">
-                    <input type="text" name="cardnumber" placeholder="Card Number" maxlength="14" required="" class="form-control">
+                    <input type="text" name="cardnumber" placeholder="Numero de Cart" maxlength="14" required="" class="form-control">
                   </div>
                   <div class="col-sm-4 form-group">
-                    <input type="text" name="expirymonth" placeholder="Expiry Month" required="" class="form-control">
+                    <input type="text" name="expirymonth" placeholder="Mois d'Expiration" required="" class="form-control">
                   </div>
                   <div class="col-sm-4 form-group">
-                    <input type="text" name="expiryyear" placeholder="Expiry Year" required="" class="form-control">
+                    <input type="text" name="expiryyear" placeholder="Année d'Expiration" required="" class="form-control">
                   </div>
                   <div class="col-sm-4 form-group">
                     <input type="text" name="cvv" placeholder="CVV" maxlength="3" required="" class="form-control">
                   </div>
                   <div class="col-sm-12 text-center my-5">
-                    <button id="shipping-submit" type="submit" class="oder-now btn btn-primary btn-lg px-4">Order Now <i class="icon-shipping-truck"></i></button>
+                    <button id="shipping-submit" type="submit" class="oder-now btn btn-primary btn-lg px-4">Validez <i class="icon-shipping-truck"></i></button>
                   </div>
                 </div>
               </div>
@@ -221,19 +162,6 @@
         </div>
       </section>
     </div>
-    <!-- Search Panel-->
-    <div class="search-overlay">
-      <div class="search-inner d-flex justify-content-center align-items-center">
-        <div class="search-close"><i class="icon-close"></i></div>
-        <div class="container">
-          <div class="form-holder">
-            <form class="d-flex">
-              <input type="search" placeholder="What are you looking for...">
-              <button type="submit" class="search text-primary text-uppercase">Search</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
   {% endblock content %} 

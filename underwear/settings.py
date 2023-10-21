@@ -37,6 +37,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'core.nbr_produits.CartItems',
 ]
 
 ROOT_URLCONF = "underwear.urls"
@@ -58,7 +59,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "underwear.wsgi.application"
-
+LOGIN_URL = 'login'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -69,6 +70,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+
 
 
 # Password validation

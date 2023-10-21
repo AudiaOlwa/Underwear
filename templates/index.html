@@ -21,12 +21,13 @@
    
     <!-- *** LOGIN MODAL END ***-->
     <!-- *** SLIDER ***-->
-    <div id="slider" class="owl-carousel owl-theme">
+    <div id="slider" class="owl-carousel owl-theme ">
       <div class="item"><img src="{% static 'img/hf6.webp'%}" alt="" class="img-fluid"></div>
       <div class="item"><img src="{% static 'img/h4.jpg'%}" alt="" class="img-fluid" ></div>
       <div class="item"><img src="{% static 'img/f4.jpg'%}" alt="" class="img-fluid" 
         style="height: %; width: 100%;"></div>
       <div class="item"><img src="{% static 'img/hf5.webp'%}" alt="" class="img-fluid" style="width:100%; height:%;"></div>
+
       </div>
 
 
@@ -38,12 +39,12 @@
               <h2 class="h5 heading-line d-none d-md-block">Categories</h2>
             </header>
             <div class="row text-center">
-               <div class="col-md-6 item"><a href="{% url 'farticle' %}">
+               <div class="col-md-6 item"><a href="{% url 'product' 'femme' %}">
                   <h4>Lingeries</h4>
                   <h6>Ensemble de slips&soutiens-gorges</h6>
                   <div class="image"><img src="{% static 'img/cf1.jpg'%}" alt="lenses" class="img-fluid" style="width:30%"></div></a></div>
 
-            <div class="col-md-6 item"><a href="{% url 'harticle' %}">
+            <div class="col-md-6 item"><a href="{% url 'product' 'homme' %}">
                   <h4>Sous-vetements</h4>
                   <h6>slip, culotte & bas hommes</h6>
                   <div class="image"><img src="{% static 'img/h2.jpeg'%}" alt="camera" class="img-fluid" style="width:30%"></div></a></div>
@@ -61,12 +62,14 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="row">
-                {% for femme in femmes %}
-                <div class="col-md-6">
+                {% for product in femme_products %}
+                
+
+                <div class="col-md-6 aos-init aos-animate" data-aos="fade-left">
                   <div class="item">
-                    <h4>{{ femme.nom }}</h4>
-                    <p class="text-primary">{{ femme.prix }} Fcfa</p><img src="{{ femme.image.url }}" alt="lens" class="img-fluid">
-                    <div class="overlay d-flex align-items-center justify-content-center"><a href="{% url 'fdetails' femme.id %}" class="btn btn-primary px-4">Voir plus</a></div>
+                    <h4>{{ product.nom }}</h4>
+                    <p class="text-primary">{{ product.prix }} Fcfa</p><img src="{{ product.image.url }}" alt="lens" class="img-fluid">
+                    <div class="overlay d-flex align-items-center justify-content-center"><a href="{% url 'details' product.id %}" class="btn btn-primary px-4">Voir plus</a></div>
                   </div>
                 </div>
                 
@@ -127,15 +130,17 @@
 
  <div class="col-lg-6">
               <div class="row">
-                {% for homme in hommes %}
-                <div class="col-md-6">
+                 {% for product in homme_products %}
+
+                
+                <div class="col-md-6 aos-init aos-animate" data-aos="fade-right">
                   <div class="item">
-                    <h4>{{ homme.nom }}</h4>
-                    <p class="text-primary">{{ homme.prix }} Fcfa </p><img src="{{ homme.image.url }}" alt="camera" class="img-fluid">
-                    <div class="overlay d-flex align-items-center justify-content-center"><a href="{% url 'hdetails' homme.id %}" class="btn btn-primary px-4">Voir plus</a></div>
+                    <h4>{{ product.nom }}</h4>
+                    <p class="text-primary">{{ product.prix }} Fcfa </p><img src="{{ product.image.url }}" alt="camera" class="img-fluid">
+                    <div class="overlay d-flex align-items-center justify-content-center"><a href="{% url 'details' product.id %}" class="btn btn-primary px-4">Voir plus</a></div>
                   </div>
                 </div>
-               
+                         
                           {% endfor %}
 
               </div>

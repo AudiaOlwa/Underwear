@@ -14,45 +14,33 @@
 
 
   <div class="nav-item dropdown active text-center "><a id="navbarHome" data-target="#" href="" data-toggle="dropdown" class="nav-link dropdown-toggle" style="background-color:ghostwhite">Catégories</a>
-              <div aria-labelledby="navbarHome" class="dropdown-menu"><a href="{% url 'harticle' %}" class="dropdown-item">Homme</a><a href="{% url 'farticle' %}" class="dropdown-item">Femme</a></div>
+              <div aria-labelledby="navbarHome" class="dropdown-menu">
+                <a href="{% url 'product' 'homme' %}" class="dropdown-item">Homme</a>
+                <a href="{% url 'product' 'femme' %}" class="dropdown-item">Femme</a></div>
             </div>
 <div class="nav-item"><a href="#contact" class="nav-link">Contact</a></div> 
-<div class="nav-item"><a href="{% url 'cart' %}" class="nav-link">Cart</a></div>           
-       <button type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-outline-secondary mr-1"><span class="sr-only">User login</span><i class="fa fa-users"></i></button>   
+
+ <!--div class="nav-item"><a href="{% url 'cart' %}" class="nav-link">Panier</a></div--> 
+<div class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></div>
+          
+ <a href="{% url 'cart' %}" class="nav-link">
+<button class="btn btn-primary" > 
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"  >
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+    </path>
+</svg><strong>{{ request.cart_items_count }}</strong> 
+</button>
+</a>
+
+       
+
+       
 
 
      </nav>
 
  
-    <div id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Customer login</h4>
-            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-          </div>
-          <div class="modal-body">
-            <form action="customer-orders.html" method="get">
-              <div class="form-group">
-                <input id="email" type="text" placeholder="email" class="form-control">
-              </div>
-              <div class="form-group">
-                <input id="password" type="password" placeholder="password" class="form-control">
-              </div>
-              <p class="text-center">
-                <button class="btn btn-outline-primary"><i class="fa fa-sign-in"></i> Log in</button>
-              </p>
-            </form>
-            <p class="text-center text-muted">Not registered yet?</p>
-            <p class="text-center text-muted"><a href="register.html"><strong>Register now</strong></a>! It is easy and done in 1 minute and gives you access
-                        to special discounts and much more!
-            </p>
-          </div>
-        </div>
-      </div>
-    </div> 
-
-
+  
 
 
 

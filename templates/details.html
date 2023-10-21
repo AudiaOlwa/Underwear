@@ -6,7 +6,12 @@
       <div class="container">
         <ol class="breadcrumb">
           <li class="breadcrumb-item text-uppercase"> <a href="{% url 'index' %}" class="text-primary">Home</a></li>
-          <li class="breadcrumb-item text-uppercase"> <a href="{% url 'harticle' %}" class="text-primary">BOXERS</a></li>
+          <li class="breadcrumb-item ">
+            {% if category %}
+           <a href="{% url 'product' category %}" 
+           class="text-primary">{% if category == 'homme' %}Boxers{% else %}Ensembles, Strings, Soutiens-gorges{% endif %}</a>
+           {% endif %}
+         </li>
           <li class="breadcrumb-item active text-uppercase">Détails</li>
         </ol>
       </div>
@@ -18,7 +23,7 @@
   <!-- Indicateurs -->
   <ol class="carousel-indicators">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    {% for hommephoto in hommephotos %}
+    {% for productphoto in productphotos %}
     <li data-target="#myCarousel" data-slide-to="{{ forloop.counter }}"></li>
     {% endfor %}
   </ol>
@@ -26,11 +31,11 @@
   <!-- Slides -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{{ homme.image.url }}" alt="Homme" class="d-block w-100 img-fluid h-100">
+      <img src="{{ product.image.url }}" alt="Homme" class="d-block w-100 img-fluid h-100">
     </div>
-    {% for hommephoto in hommephotos %}
+    {% for productphoto in productphotos %}
     <div class="carousel-item">
-      <img src="{{ hommephoto.image.url }}" alt="HommePhoto" class="d-block w-100 img-fluid h-100">
+      <img src="{{ productphoto.images.url }}" alt="ProductPhoto" class="d-block w-100 img-fluid h-100">
     </div>
     {% endfor %}
   </div>
@@ -48,18 +53,25 @@
 
 
             <div class="col-md-6">
-              <h1 class="h2">{{ homme.nom }}</h1>
-              <div class="price d-flex justify-content-between align-items-center text-primary">{{ homme.prix}} Fcfa</div>
+              <h1 class="h2">{{ product.nom }}</h1>
+              <h3 class="price d-flex justify-content-between align-items-center text-primary">Type => {{ product.product_type }}</h3>
+              <div class="price d-flex justify-content-between align-items-center text-primary">{{ product.prix}} Fcfa</div>
               
               <div class="description">
-                 <h6> <b><i>{{ homme.description }}</i></b> </h6>
+                 <h6> <b><i>{{ product.description }}</i></b> </h6>
               </div>
-              <form action="#" method="get">
+              <form action="{% url 'add_to_cart' product.id %}" method="post">
               
                 <div class="CTAs my-5 mt-5"> 
                   <ul class="list-inline">
                     <li class="list-inline-item">
-                      <button href="{% url 'cart' %}" class="btn btn-primary px-4">Acheter</button>
+                      {% csrf_token %}
+                       <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-primary btn-sm">Ajouter
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> 
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+    </path>
+</svg>
+</a>
                     </li>
                    
                   </ul>
@@ -79,28 +91,34 @@
 
 
 
-
       <!-- Related Items                         -->
       <section class="related-items p-t-small p-b-small">
         <div class="container">
           <h3 class="heading-line">Vous aimeriez surement...</h3>
           <div class="row">
-             {% for homme in hommes %}    
-                <div class="col-lg-3 col-md-6">
+              {% for related_product in related_products %}
+                
+                <div class="col-lg-3 col-md-6 aos-init aos-animate" data-aos="fade-left">
                   <div class="item text-center">
-                    <div class="product-image"><span class="new badge badge-pill badge-info text-uppercase">new</span><img src="{{ homme.image.url }}" alt="camera" class="img-fluid">
-                      <div class="overlay p-0 d-flex align-items-center justify-content-center mt-5"><a href="" class="wishlist"><i class="fa fa-heart"></i></a>
+                    <div class="product-image"><span class="new badge badge-pill badge-info text-uppercase">new</span><img src="{{ related_product.image.url }}" alt="camera" class="img-fluid">
+                      <div class="overlay p-0 d-flex align-items-center justify-content-center mt-5">
+                        
                         <ul class="list-unstyled mb-0">
-                          <li><a href="{% url 'hdetails' homme.id %}" class="btn btn-primary btn-sm px-4 mb-2">
+                          <li><a href="{% url 'details' product.id %}" class="btn btn-primary btn-sm px-4 mb-2">
                                
                               Voir plus</a></li>
-                          <li><a href="{% url 'cart' %}" class="btn btn-dark btn-sm">
-                               
-                              Acheter</a></li>
+                          <li>
+ <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-dark btn-sm">Ajouter
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> 
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+    </path>
+</svg>
+</a>                           
+                            </li>
                         </ul>
                       </div>
                     </div><a href="#" class="item-name">
-                      <h4 class="h6">{{ homme.nom }}</h4></a>
+                      <h4 class=" mt-5" style="padding-top: 65px;">{{ related_product.nom }}</h4></a>
                     <ul class="list-inline rate text-primary my-2">
                       <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                       <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
@@ -108,12 +126,13 @@
                       <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                       <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                     </ul>
-                    <h6 style="margin-top: 70px">{{ homme.description }}</h6>
+                    <h6 style="">{{ related_product.description }}</h6>
                     <ul class="price list-inline">
-                      <li class="list-inline-item"> <span class="price">{{ homme.prix }} Fcfa</span></li>
+                      <li class="list-inline-item"> <span class="price">{{ related_product.prix }} Fcfa</span></li>
                     </ul>
                   </div>
                 </div>
+                
                 {% endfor %} 
                 
           </div>

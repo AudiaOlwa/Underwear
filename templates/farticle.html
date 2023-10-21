@@ -20,25 +20,31 @@
                 <h2 class="heading-line">Lingeries pour Femmes</h2>
               </div>
               <div class="col-md-6">
-                <div class="filters d-flex justify-content-end">
-                  <select title="Brand" name="brand" class="form-control">
-                    <option value="">Strings</option>
-                    <option value="">Soutien-gorges</option>
-                    <option value="">Cullotes</option>
-                    
-                  </select>
-                  <select title="Alphabetically A-Z" name="alphabetically" class="form-control">
-                    <option value="">Alphabetically A-Z</option>
-                    <option value="">Alphabetically Z-A</option>
-                  </select>
-                </div>
+          <div class="filters d-flex justify-content-end">
+          <form  method="GET" type="submit" >
+            <select title="Brand" name="brand" class="filters form-control">
+                <option value="" {% if selected_brand == "" %}selected{% endif %}>Tout les produits</option>
+                <option value="Strings"{% if selected_brand == "Strings" %}selected{% endif %} >Strings</option>
+                <option value="Ensembles"{% if selected_brand == "Ensembles" %}selected{% endif %} >Ensembles</option>
+                <option value="Cullotes" {% if selected_brand == "Cullotes" %}selected{% endif %}>Cullotes</option>
+            </select>
+           
+            <button class="btn btn-primary" type="submit">Rechercher</button>
+           
+        </form>
+</div>
+
+
+ 
               </div>
             </div>
           </header>
           <div class="my-5">
             <div class="row">
+              
+              
                  {% for femme in femmes %} 
-                  <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="col-lg-3 col-md-4 col-sm-6 aos-init aos-animate" data-aos="fade-left">
                     <div class="item text-center">
                       <div class="product-image"><span class="new badge badge-pill badge-secondary text-uppercase">sale</span><img src="{{ femme.image.url }}" alt="camera" class="img-fluid">
                         <div class="overlay p-0 d-flex align-items-center justify-content-center mt-5"><a href="#" class="wishlist"><i class="fa fa-heart"></i></a>
@@ -51,8 +57,8 @@
                                 Acheter</a></li>
                           </ul>
                         </div>
-                      </div><a href="detail.html" class="item-name">
-                        <h4 class="h6">{{ femme.nom }}</h4></a>
+                      </div>
+                        <h4 class=" mt-5" style="padding-top: 65px;">{{ femme.nom }}</h4>
                       <ul class="list-inline rate text-primary my-2">
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
@@ -60,18 +66,18 @@
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                       </ul>
-                      <h6 class="" style="margin-top: 70px"> <b><i>{{ femme.description }}</i></b> </h6>
+                      <h6 class="" style="margin-top: px"> <b><i>{{ femme.description }}</i></b> </h6>
                       <ul class="price list-inline">
+                         
                         <li class="list-inline-item"> <span class="price">{{ femme.prix }} Fcfa</span></li>
+                       
                       </ul>
                     </div>
-                  </div>
-                   {% endfor %}
+                   </div>
                   
-                
-               
-              
-            </div>
+                   {% endfor %}
+                </div>
+
           </div>
           <!-- Pagination -->
           <div class="pagination pagination-custom mt-5">
@@ -106,5 +112,9 @@
         </div>
       </div>
     </div>
+
+
+
+    
 
 {% endblock content %} 

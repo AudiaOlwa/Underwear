@@ -8,7 +8,7 @@
       <div class="container">
         <ol class="breadcrumb">
           <li class="breadcrumb-item text-uppercase"> <a href="{% url 'index' %}" class="text-primary">Home</a></li>
-          <li class="breadcrumb-item active text-uppercase">BOXERS</li>
+          <li class="breadcrumb-item active text-uppercase">{% if category == 'homme' %}BOXERS{% else %}LINGERIES{% endif %}</li>
         </ol>
       </div>
       <!-- Products-->
@@ -17,42 +17,50 @@
           <header>
             <div class="row d-flex align-items-center">
               <div class="col-md-6">
-                <h2 class="heading-line">Sous-vetements Hommes</h2>
+                <h2 class="heading-line">Sous-vetements {% if category == 'homme' %}Hommes{% else %}Femmes{% endif %}</h2>
               </div>
               <div class="col-md-6">
                 <div class="filters d-flex justify-content-end">
-                  <select title="Brand" name="brand" class="form-control">
-                    <option value="">Boxers</option>
-                    <option value="">Cullotes</option>
-                    <option value="">Slips</option>
-                    
-                  </select>
-                  <select title="Alphabetically A-Z" name="alphabetically" class="form-control">
-                    <option value="">Alphabetically A-Z</option>
-                    <option value="">Alphabetically Z-A</option>
-                  </select>
+                   <form  method="GET"  >
+            <select title="Type de produit" name="product_type" class="filters form-control">
+                 <option value="" {% if not selected_product_type %}selected{% endif %}>Tous les produits</option>
+            {% for product_type in product_types %}
+                <option value="{{ product_type.product_type }}" {% if selected_product_type == product_type.product_type %}selected{% endif %}>{{ product_type.product_type }}</option>
+            {% endfor %}
+            </select>
+           <button class="btn btn-primary" type="submit">Rechercher</button>
+           </form>
                 </div>
               </div>
             </div>
           </header>
           <div class="my-5">
             <div class="row">
-                 {% for homme in hommes %} 
-                  <div class="col-lg-3 col-md-4 col-sm-6">
+                 {% for product in products %} 
+                  <div class="col-lg-3 col-md-4 col-sm-6 aos-init aos-animate" data-aos="fade-left">
                     <div class="item text-center">
-                      <div class="product-image"><span class="new badge badge-pill badge-secondary text-uppercase">sale</span><img src="{{ homme.image.url }}" alt="camera" class="img-fluid">
-                        <div class="overlay p-0 d-flex align-items-center justify-content-center mt-5"><a href="" class="wishlist"><i class="fa fa-heart"></i></a>
+                      <div class="product-image"><span class="new badge badge-pill badge-secondary text-uppercase">sale</span><img src="{{ product.image.url }}" alt="camera" class="img-fluid">
+                        <div class="overlay p-0 d-flex align-items-center justify-content-center mt-5">
+
                           <ul class="list-unstyled mb-0">
-                            <li><a href="{% url 'hdetails' homme.id %}" class="btn btn-primary btn-sm px-4 mb-2"> 
+                            <li><a href="{% url 'details' product.id %}" class="btn btn-primary btn-sm px-4 mb-2"> 
                                  
                                 Voir plus</a></li>
-                            <li><a href="{% url 'cart' %}" class="btn btn-dark btn-sm">
-                                 
-                                Acheter</a></li>
-                          </ul>
-                        </div>
-                      </div><a href="detail.html" class="item-name">
-                        <h4 class="h6">{{ homme.nom }}</h4></a>
+                            <li>
+    <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-dark btn-sm">Ajouter
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> 
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+    </path>
+</svg>
+</a></li>
+     </ul>
+      </div>
+       </div>
+                      <!--li>
+                        <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-dark btn-sm">
+                        Acheter</a></li-->
+                      <a href="detail.html" class="item-name">
+                        <h4 class=" mt-5" style="padding-top: 65px;">{{ product.nom }}</h4></a>
                       <ul class="list-inline rate text-primary my-2">
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
@@ -60,9 +68,9 @@
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                       </ul>
-                      <h6 class="" style="margin-top: 70px"> <b><i>{{ homme.description }}</i></b> </h6>
+                      <h6> <b><i>{{ product.description }}</i></b> </h6>
                       <ul class="price list-inline">
-                        <li class="list-inline-item"> <span class="price">{{ homme.prix }} Fcfa</span></li>
+                        <li class="list-inline-item"> <span class="price">{{ product.prix }} Fcfa</span></li>
                       </ul>
                     </div>
                   </div>
