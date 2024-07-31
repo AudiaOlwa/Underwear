@@ -4,14 +4,19 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, ProductPhoto
 from django.shortcuts import redirect, reverse
 from .models import Cart
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .forms import CustomLoginForm
 from django.db.models import Count
 import random
 # Create your views here.
 
+def logout_user(request):
+    logout(request)
+    return redirect('index')
 def custom_login(request):
+    form = CustomLoginForm()
+    message = ''
     if request.method == 'POST':
         form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
@@ -21,11 +26,13 @@ def custom_login(request):
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
-    else:
-        form = CustomLoginForm()
-    return render(request, 'login.html', {'form': form})
+            else:
+                message = 'Identifiants invalides.'
+    return render(request, 'login.html', {'form': form, 'message': message})
 
-@login_required(login_url='login')
+
+
+@login_required
 def index(request):
     homme_products_all = list(Product.objects.filter(category='homme'))
 # Récupérez tous les produits de la catégorie "femme"
@@ -37,7 +44,7 @@ def index(request):
 	
 	
 
-@login_required
+
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
 # Récupère les photos supplémentaires du produit
@@ -55,7 +62,6 @@ def product_detail(request, pk):
     })
 
 
-@login_required
 def product_category(request, category):
     if request.method == "GET":
         product_type = request.GET.get('product_type')
@@ -70,7 +76,7 @@ def product_category(request, category):
 
 
 
-@login_required
+
 def add_to_cart(request, pk):
     product = get_object_or_404(Product, pk=pk)
     cart, created = Cart.objects.get_or_create(user=request.user, product=product)
@@ -83,7 +89,7 @@ def add_to_cart(request, pk):
     return redirect(referer)
 
     #return redirect('details', pk=pk)
-@login_required
+
 def cart(request):
     user = request.user
     cart = reversed(Cart.objects.filter(user=user))

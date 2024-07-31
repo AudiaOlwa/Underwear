@@ -2,7 +2,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from core import views
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include 
+from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -18,7 +20,13 @@ urlpatterns = [
     path('decrease-quantity/<int:pk>/', views.decrease_quantity, name='decrease_quantity'),
     path('remove_from_cart/<int:pk>/', views.remove_from_cart, name='remove_from_cart'),
     path("essaie", views.essaie, name="essaie"),
-    path('login', views.custom_login, name='login'),
+    path('login/', views.custom_login, name='login'),
+    path('logout', views.logout_user, name='logout'),
+    #path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
+   
+    
 ]
 
 if settings.DEBUG:

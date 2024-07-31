@@ -2,7 +2,14 @@
   {% load static %}
   {% block content %}
 
-
+      {% if user.is_authenticated %}
+      <div class="text-center" 
+            style="background-color:ghostwhite;">
+              <h4 class="text-danger mt-"> <i> <b>Bienvenu {{ request.user }}</b> </i></h4>
+                      </div>
+      
+      {% endif %}
+      
  <div class="container" >
           <!-- *** ADVANTAGES ***-->
           <div id="advantages" >
@@ -26,7 +33,7 @@
       <div class="item"><img src="{% static 'img/h4.jpg'%}" alt="" class="img-fluid" ></div>
       <div class="item"><img src="{% static 'img/f4.jpg'%}" alt="" class="img-fluid" 
         style="height: %; width: 100%;"></div>
-      <div class="item"><img src="{% static 'img/hf5.webp'%}" alt="" class="img-fluid" style="width:100%; height:%;"></div>
+      <div class="item"><img src="{% static 'img/hf5.webp'%}" alt="" class="img-fluid" style="width:100%; height:auto;"></div> 
 
       </div>
 
@@ -97,7 +104,7 @@
     <!-- *** SLIDER END ***-->
     
      
-               <div class="bar background-image-fixed-2 no-mb color-white text-center" style="background: url('{% static 'img/f.jpg'%}')">>
+               <div class="bar background-image-fixed-2 no-mb color-white text-center" style="background: url('{% static 'img/f.jpg'%}')">
          </div>
             
             <!-- /.modal-->
