@@ -36,7 +36,7 @@
           </header>
           <div class="my-5">
             <div class="row">
-                 {% for product in products %} 
+                 {% for product in page_obj %} 
                   <div class="col-lg-3 col-md-4 col-sm-6 aos-init aos-animate" data-aos="fade-left">
                     <div class="item text-center">
                       <div class="product-image"><span class="new badge badge-pill badge-secondary text-uppercase">sale</span><img src="{{ product.image.url }}" alt="camera" class="img-fluid">
@@ -62,12 +62,13 @@
                       <a href="detail.html" class="item-name">
                         <h4 class=" mt-5" style="padding-top: 65px;">{{ product.nom }}</h4></a>
                       <ul class="list-inline rate text-primary my-2">
-                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star-o" ></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                         <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
                       </ul>
+                      
                       <h6> <b><i>{{ product.description }}</i></b> </h6>
                       <ul class="price list-inline">
                         <li class="list-inline-item"> <span class="price">{{ product.prix }} Fcfa</span></li>
@@ -75,25 +76,37 @@
                     </div>
                   </div>
                    {% endfor %}
-                  
-                
-               
-              
-            </div>
+                   </div>
           </div>
+          
+        
           <!-- Pagination -->
           <div class="pagination pagination-custom mt-5">
             <nav aria-label="...">
               <ul class="pagination pagination-sm d-flex justify-content-between">
-                <li class="page-item disabled"><a href="#" tabindex="-1" class="page-link">Previous</a></li>
+                
+                <li class="page-item ">
+                  {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}"  class="page-link">Previous</a>
+                {% endif %}
+                  </li>
+                  
                 <li> 
                   <ul class="pages list-inline">
-                    <li class="page-item active list-inline-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item list-inline-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item list-inline-item"><a href="#" class="page-link">3</a></li>
+                    {% for num in page_obj.paginator.page_range %}
+            <li class="page-item{% if num == page_obj.number %} active{% endif %} list-inline-item">
+              <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+            </li>
+          {% endfor %}
                   </ul>
                 </li>
-                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+               
+                <li class="page-item">
+                  {% if page_obj.has_next %}
+                  <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+                  {% endif %}
+                </li>
+                
               </ul>
             </nav>
           </div>

@@ -9,6 +9,8 @@ from django.http import HttpResponseRedirect
 from .forms import CustomLoginForm
 from django.db.models import Count
 import random
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 def logout_user(request):
@@ -62,21 +64,45 @@ def product_detail(request, pk):
     })
 
 
+#def product_category(request, category):
+#    if request.method == "GET":
+#        product_type = request.GET.get('product_type')
+#        if product_type == "":
+#            products = reversed(Product.objects.filter(category=category))
+#        elif product_type is not None:
+#            products = reversed(Product.objects.filter(category=category, product_type=product_type))
+#        else:
+#            products = reversed(Product.objects.filter(category=category))
+#        
+    
+        #return render(request, 'product.html', {'products': products, 'product_types': product_types, 'selected_product_type': product_type, 'category': category})
+#----------------------------------------------------------------------------
 def product_category(request, category):
     if request.method == "GET":
         product_type = request.GET.get('product_type')
         if product_type == "":
-            products = reversed(Product.objects.filter(category=category))
+            products = list(reversed(Product.objects.filter(category=category)))
         elif product_type is not None:
-            products = reversed(Product.objects.filter(category=category, product_type=product_type))
+            products = list(reversed(Product.objects.filter(category=category, product_type=product_type)))
         else:
-            products = reversed(Product.objects.filter(category=category))
+            products = list(reversed(Product.objects.filter(category=category)))
+        # ... le reste du code reste inchangé
         product_types = Product.objects.filter(category=category).values('product_type').annotate(count=Count('product_type'))
-        return render(request, 'product.html', {'products': products, 'product_types': product_types, 'selected_product_type': product_type, 'category': category})
+        paginator = Paginator(products, 4)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            'page_obj': page_obj,
+            'product_types': product_types,
+            'selected_product_type': product_type,
+            'category': category
+        }
+        return render(request, 'product.html', context=context)
+
+ 
 
 
-
-
+#-------------------------------------------------------------------
 def add_to_cart(request, pk):
     product = get_object_or_404(Product, pk=pk)
     cart, created = Cart.objects.get_or_create(user=request.user, product=product)
@@ -118,6 +144,3 @@ def remove_from_cart(request, pk):
 
 def essaie(request):
 	return render(request, 'essaie.html')
-
-
-
